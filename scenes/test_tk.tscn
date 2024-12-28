@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://drq0nbd08khfl"]
+[gd_scene load_steps=3 format=3 uid="uid://drq0nbd08khfl"]
 
 [ext_resource type="PackedScene" uid="uid://biho0sqnsx1b2" path="res://gameObjects/block.tscn" id="1_0xpa4"]
+[ext_resource type="PackedScene" uid="uid://c1f5nxwlbhb2u" path="res://gameObjects/player.tscn" id="2_1n1po"]
 
 [node name="TestTk" type="Node2D"]
 
@@ -9,4 +10,5 @@
 [node name="Block2" parent="." instance=ExtResource("1_0xpa4")]
 position = Vector2(32, 0)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("2_1n1po")]
+position = Vector2(0, -32)
