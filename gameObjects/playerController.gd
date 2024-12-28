@@ -7,11 +7,14 @@ enum Direction {
 	down=3
 }
 
+@export var tilemap: TileMapLayer
+@onready var sprite := $AnimatedSprite2D
+
 var actions = []
 var blockAction = true
-@export var tilemap: TileMapLayer
 var turnManager
 @onready var pointsLabel = $Camera2D/UI/RichTextLabel
+var digging := false
 
 func getTransformVector(direction):
 	var result = Vector2(0, 0)
@@ -52,6 +55,11 @@ func _ready() -> void:
 
 func unblockActions(turnIndex):
 	blockAction = false
+	if digging:
+		digging = false
+		
+		# sprite.stop()
+		# tilemap.erase_cell(nextPosition)
 
 func startMove(direction):
 	if direction not in actions:
@@ -105,7 +113,6 @@ func isFalling():
 	return positionUnderCellData.get_custom_data("empty")
 	
 func doAction(actions):
-	var possibleActions = getPossibleActions()
 	if blockAction:
 		return
 		
@@ -114,6 +121,7 @@ func doAction(actions):
 		turnManager.playerActionSelect.emit(tilemap)
 		return
 		
+	var possibleActions = getPossibleActions()
 	if len(possibleActions) < 1:
 		return
 	
@@ -124,10 +132,15 @@ func doAction(actions):
 	var nextCellData: TileData = tilemap.get_cell_tile_data(nextPosition)
 	if not nextCellData or nextCellData.get_custom_data("empty"):
 		blockAction = true
+		
 		position = position + getTransformVector(action)
+		
 		turnManager.playerActionSelect.emit(tilemap)
-		return
-
+		
+	if nextCellData and nextCellData.get_custom_data("destructable"):
+		sprite.play("dig")
+		digging = true
+		tilemap.erase_cell(nextPosition)
 
 func onGravityCheck(tileMap):
 	if not isFalling():
@@ -160,7 +173,6 @@ func _input(event):
 		stopMove(Direction.up)
 	if event.is_action_released("down"):
 		stopMove(Direction.down)
-
 
 func _on_button_pressed() -> void:
 	print("kliklem")
