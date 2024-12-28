@@ -21,3 +21,4 @@ region_rect = Rect2(0, 0, 32, 32)
 region_filter_clip_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
