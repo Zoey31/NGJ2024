@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://biho0sqnsx1b2"]
+
+[ext_resource type="Texture2D" uid="uid://bl6n5molevs8l" path="res://sprites/Sprite-0001.png" id="1_o2th6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_li7e5"]
+size = Vector2(32, 32)
+
+[node name="Rock" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_li7e5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_o2th6")
+region_enabled = true
+region_rect = Rect2(0, 160, 32, 32)
+region_filter_clip_enabled = true
