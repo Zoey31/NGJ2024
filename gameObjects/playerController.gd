@@ -34,13 +34,17 @@ func doAction(actions):
 	var action = actions[0]
 	
 	if action == Direction.up:
-		position.y -= 32
+		move_local_y(-32)
+		#position.y -= 32
 	if action == Direction.down:
-		position.y += 32
+		move_local_y(32)
+		#position.y += 32
 	if action == Direction.left:
-		position.x -= 32
+		move_local_x(-32)
+		#position.x -= 32
 	if action == Direction.right:
-		position.x += 32
+		move_local_x(32)
+		#position.x += 32
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
