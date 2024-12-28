@@ -7,13 +7,13 @@ size = Vector2(32, 32)
 
 [node name="Block" type="Node2D"]
 
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_li7e5")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_hcv85")
 region_enabled = true
 region_rect = Rect2(32, 64, 32, 32)
 region_filter_clip_enabled = true
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("RectangleShape2D_li7e5")
