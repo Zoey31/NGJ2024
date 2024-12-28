@@ -11,6 +11,7 @@ var actions = []
 var blockAction = true
 @export var tilemap: TileMapLayer
 var turnManager
+@onready var pointsLabel = $Camera2D/UI/RichTextLabel
 
 func getTransformVector(direction):
 	var result = Vector2(0, 0)
@@ -159,3 +160,11 @@ func _input(event):
 		stopMove(Direction.up)
 	if event.is_action_released("down"):
 		stopMove(Direction.down)
+
+
+func _on_button_pressed() -> void:
+	print("kliklem")
+	pointsLabel.isToggled = true
+	await get_tree().create_timer(1.5).timeout
+	pointsLabel.isToggled = false
+	print("odklikuje")

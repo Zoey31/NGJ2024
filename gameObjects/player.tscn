@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d01pinphi0h0q"]
+[gd_scene load_steps=5 format=3 uid="uid://d01pinphi0h0q"]
 
 [ext_resource type="Script" path="res://gameObjects/playerController.gd" id="1_3bppj"]
 [ext_resource type="Texture2D" uid="uid://bl6n5molevs8l" path="res://sprites/Sprite-0001.png" id="1_dbnc4"]
+[ext_resource type="Script" path="res://gameObjects/animate_ui.gd" id="3_pdie0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ed62g"]
 size = Vector2(32, 32)
@@ -22,3 +23,36 @@ region_filter_clip_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="UI" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D/UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 64.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = -96.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[p align=right]0000"
+script = ExtResource("3_pdie0")
+
+[node name="Button" type="Button" parent="Camera2D/UI"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = -32.0
+offset_right = 104.0
+offset_bottom = -24.0
+
+[connection signal="pressed" from="Camera2D/UI/Button" to="." method="_on_button_pressed"]
