@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://drq0nbd08khfl"]
+
+[ext_resource type="PackedScene" uid="uid://biho0sqnsx1b2" path="res://gameObjects/block.tscn" id="1_0xpa4"]
+
+[node name="TestTk" type="Node2D"]
+
+[node name="Block" parent="." instance=ExtResource("1_0xpa4")]
+
+[node name="Block2" parent="." instance=ExtResource("1_0xpa4")]
+position = Vector2(32, 0)
+
+[node name="Camera2D" type="Camera2D" parent="."]
