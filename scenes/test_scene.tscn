@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvw57iic5unhl"]
 
-[ext_resource type="PackedScene" uid="uid://biho0sqnsx1b3" path="res://gameObjects/block.tscn" id="1_nnjn0"]
+[ext_resource type="PackedScene" uid="uid://byrhyyo04imjj" path="res://gameObjects/block.tscn" id="1_nnjn0"]
 [ext_resource type="PackedScene" uid="uid://biho0sqnsx1b6" path="res://gameObjects/rock.tscn" id="2_0juuf"]
-[ext_resource type="PackedScene" uid="uid://biho0sqnsx1b4" path="res://gameObjects/hardBlock.tscn" id="3_a2a6l"]
+[ext_resource type="PackedScene" uid="uid://c36v7vqi0aiaw" path="res://gameObjects/hardBlock.tscn" id="3_a2a6l"]
 [ext_resource type="PackedScene" uid="uid://d01pinphi0h0q" path="res://gameObjects/player.tscn" id="4_yhccb"]
 
 [node name="Node2D" type="Node2D"]

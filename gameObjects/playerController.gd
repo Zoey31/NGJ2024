@@ -10,6 +10,7 @@ enum Direction {
 var actions = []
 var blockAction = false
 @export var tilemap: TileMapLayer
+var turnManager
 
 func getTransformVector(direction):
 	var result = Vector2(0, 0)
@@ -43,6 +44,7 @@ func getNextPosition(direction):
 func _ready() -> void:
 	actions = []
 	blockAction = false
+	turnManager = get_node("/root/TurnManager")
 	
 func startMove(direction):
 	if direction not in actions:
@@ -64,13 +66,12 @@ func doAction(actions):
 
 	var current = getCurrentPosition()
 	var nextPosition = getNextPosition(action)
-	var nextCellData = tilemap.get_cell_tile_data(nextPosition)
-	print("Current: " + str(current))
-	print("nextPosition: " + str(nextPosition))
-	print("nextCellData: " + str(nextCellData))
+	var nextCellData: TileData = tilemap.get_cell_tile_data(nextPosition)
 	
 	if nextCellData and nextCellData.get_custom_data("walkable"):
 		position = position + getTransformVector(action)
+		turnManager.playerActionSelect.emit(tilemap)
+		return
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

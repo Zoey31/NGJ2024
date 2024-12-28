@@ -15,6 +15,10 @@ run/main_scene="res://scenes/tilemap_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+TurnManager="*res://globals/TurnManager.gd"
+
 [input]
 
 left={
