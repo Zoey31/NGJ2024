@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="NGJ2024"
-run/main_scene="res://scenes/test_scene.tscn"
+run/main_scene="res://scenes/tilemap_scene.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -40,4 +40,4 @@ down={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.282353, 0.329412, 0.329412, 1)
+environment/defaults/default_clear_color=Color(0, 0.383216, 0.219411, 1)

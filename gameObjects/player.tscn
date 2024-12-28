@@ -17,7 +17,7 @@ shape = SubResource("RectangleShape2D_ed62g")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_dbnc4")
 region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
+region_rect = Rect2(0, 0, 32, 31)
 region_filter_clip_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]

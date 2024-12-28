@@ -9,6 +9,35 @@ enum Direction {
 
 var actions = []
 var blockAction = false
+@export var tilemap: TileMapLayer
+
+func getTransformVector(direction):
+	var result = Vector2(0, 0)
+	if direction == Direction.up:
+		result.y -= tilemap.tile_set.tile_size.y
+	if direction == Direction.down:
+		result.y += tilemap.tile_set.tile_size.y
+	if direction == Direction.left:
+		result.x -= tilemap.tile_set.tile_size.x
+	if direction == Direction.right:
+		result.x += tilemap.tile_set.tile_size.x
+		
+	return result
+	
+func getTilemapPosition(globalPosition):
+	var result = tilemap.local_to_map(globalPosition)
+		
+	return result
+	
+func getCurrentPosition():
+	return getTilemapPosition(position)
+
+func getNextPosition(direction):
+	var nextPositionGlobal = position + getTransformVector(direction)
+	
+	return getTilemapPosition(nextPositionGlobal)
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,19 +61,16 @@ func doAction(actions):
 		return
 	blockAction = true
 	var action = actions[0]
+
+	var current = getCurrentPosition()
+	var nextPosition = getNextPosition(action)
+	var nextCellData = tilemap.get_cell_tile_data(nextPosition)
+	print("Current: " + str(current))
+	print("nextPosition: " + str(nextPosition))
+	print("nextCellData: " + str(nextCellData))
 	
-	if action == Direction.up:
-		move_local_y(-32)
-		#position.y -= 32
-	if action == Direction.down:
-		move_local_y(32)
-		#position.y += 32
-	if action == Direction.left:
-		move_local_x(-32)
-		#position.x -= 32
-	if action == Direction.right:
-		move_local_x(32)
-		#position.x += 32
+	if nextCellData and nextCellData.get_custom_data("walkable"):
+		position = position + getTransformVector(action)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
