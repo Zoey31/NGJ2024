@@ -2,6 +2,7 @@ extends Node
 
 var currentTurn = 0
 signal playerActionSelect(tileMap)
+signal playerRayCast()
 signal onTurnChange(tileMap)
 signal onGravityCheck(tileMap)
 signal onTurnStart(currentTurnIndex)
