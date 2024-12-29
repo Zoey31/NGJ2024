@@ -45,8 +45,6 @@ func getNextPosition(direction):
 	var nextPositionGlobal = position + getTransformVector(direction)
 	return getTilemapPosition(nextPositionGlobal)
 
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	actions = []
