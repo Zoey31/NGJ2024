@@ -8,13 +8,15 @@ enum Direction {
 }
 
 @export var tilemap: TileMapLayer
+
 @onready var sprite := $AnimatedSprite2D
+@onready var pointsLabel := $Camera2D/UI/RichTextLabel
+@onready var turnManager := get_node("/root/TurnManager")
 
 var actions = []
-var blockAction = true
-var turnManager
-@onready var pointsLabel = $Camera2D/UI/RichTextLabel
+var blockAction := true
 var digging := false
+var lookDir := Direction.right
 
 func getTransformVector(direction):
 	var result = Vector2(0, 0)
@@ -30,16 +32,13 @@ func getTransformVector(direction):
 	return result
 	
 func getTilemapPosition(globalPosition):
-	var result = tilemap.local_to_map(globalPosition)
-		
-	return result
+	return tilemap.local_to_map(globalPosition)
 	
 func getCurrentPosition():
 	return getTilemapPosition(position)
 
 func getNextPosition(direction):
 	var nextPositionGlobal = position + getTransformVector(direction)
-	
 	return getTilemapPosition(nextPositionGlobal)
 
 
@@ -49,7 +48,7 @@ func _ready() -> void:
 	actions = []
 	blockAction = true
 	print("ready player")
-	turnManager = get_node("/root/TurnManager")
+	
 	turnManager.onGravityCheck.connect(onGravityCheck)
 	turnManager.onTurnStart.connect(unblockActions)
 
@@ -64,6 +63,7 @@ func unblockActions(turnIndex):
 func startMove(direction):
 	if direction not in actions:
 		actions.append(direction)
+		lookDir = direction
 		
 func stopMove(direction):
 	if direction in actions:
@@ -126,7 +126,6 @@ func doAction(actions):
 		return
 	
 	
-	var current = getCurrentPosition()
 	var action = possibleActions[0]
 	var nextPosition = getNextPosition(action)
 	var nextCellData: TileData = tilemap.get_cell_tile_data(nextPosition)
@@ -138,9 +137,8 @@ func doAction(actions):
 		turnManager.playerActionSelect.emit(tilemap)
 		
 	if nextCellData and nextCellData.get_custom_data("destructable"):
-		sprite.play("dig")
-		digging = true
-		tilemap.erase_cell(nextPosition)
+		startDigging(nextPosition)
+		
 
 func onGravityCheck(tileMap):
 	if not isFalling():
@@ -150,13 +148,36 @@ func onGravityCheck(tileMap):
 	var nextCellData: TileData = tileMap.get_cell_tile_data(nextPosition)
 	if not nextCellData or nextCellData.get_custom_data("empty"):
 		position = position + getTransformVector(action)
-		
+
+func  _updateSprite():
+	if sprite == null:
+		return
+	
+	sprite.flip_h = lookDir == Direction.left
+	
+func startDigging(cellPos: Vector2i):
+	digging = true
+	sprite.animation_finished.connect(finishDigging.bind([cellPos]))
+	sprite.play("dig")
+
+	# fajnie by było dać to po animacji ale nie działa :(
+	tilemap.erase_cell(cellPos)
+
+func finishDigging(cellPos: Vector2i):
+	digging = false
+	tilemap.erase_cell(cellPos)
+	sprite.stop()
+	
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	_updateSprite()
 	doAction(actions)
 	
 func _input(event):
+
+	#TODO: zrobić jakoś żeby trzymanie nie działało
 	if event.is_action_pressed("left"):
 		startMove(Direction.left)
 	if event.is_action_pressed("right"):
@@ -165,6 +186,7 @@ func _input(event):
 		startMove(Direction.up)
 	if event.is_action_pressed("down"):
 		startMove(Direction.down)
+
 	if event.is_action_released("left"):
 		stopMove(Direction.left)
 	if event.is_action_released("right"):

@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 TurnManager="*res://globals/TurnManager.gd"
 
+[dotnet]
+
+project/assembly_name="NGJ2024"
+
 [input]
 
 left={

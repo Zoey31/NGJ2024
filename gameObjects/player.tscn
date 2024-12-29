@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d01pinphi0h0q"]
+[gd_scene load_steps=11 format=3 uid="uid://d01pinphi0h0q"]
 
 [ext_resource type="Script" path="res://gameObjects/playerController.gd" id="1_3bppj"]
 [ext_resource type="Texture2D" uid="uid://bl6n5molevs8l" path="res://sprites/Sprite-0001.png" id="1_dbnc4"]
@@ -45,7 +45,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mcjow")
 }],
-"loop": true,
+"loop": false,
 "name": &"dig",
 "speed": 10.0
 }]
